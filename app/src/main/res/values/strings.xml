@@ -2,6 +2,6 @@
     <string name="app_name">SudokuProject</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="loginOption">Already Register. Login</string>
-    <string name="register">Don\'t have account register here</string>
+    <string name="loginOption">Already Register. Login here</string>
+    <string name="register">Don\'t have account. Register here</string>
 </resources>
