@@ -12,9 +12,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val myIntent= Intent(this,Login::class.java)
-
+        val gameOptionIntent= Intent(this,GameOptions::class.java)
         loginLink.setOnClickListener{
             startActivity(myIntent)
+        }
+        registerBtn.setOnClickListener{
+            startActivity(gameOptionIntent)
         }
     }
 }

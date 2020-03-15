@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_main.*
+
 
 class Login : AppCompatActivity() {
 
@@ -12,10 +12,14 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val myIntent= Intent(this,MainActivity::class.java)
+        val myIntent = Intent(this, MainActivity::class.java)
+        val gameOptionIntent = Intent(this, GameOptions::class.java)
 
-        registerLink.setOnClickListener{
+        registerLink.setOnClickListener {
             startActivity(myIntent)
+        }
+        loginBtn.setOnClickListener {
+            startActivity(gameOptionIntent)
         }
     }
 }
