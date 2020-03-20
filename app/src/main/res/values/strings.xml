@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SudokuProject</string>
+    <string name="app_name">Singh Sudoku</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="loginOption"><u>Already Register. Login here</u></string>
