@@ -7,4 +7,6 @@
     <string name="registerText">Register</string>
     <string name="login">Login</string>
     <string name="myUser"> <u>signed in as simerpreet</u></string>
+    <string name="gameName">Singh Sudoku</string>
+    <string name="dialogText">High Score</string>
 </resources>
