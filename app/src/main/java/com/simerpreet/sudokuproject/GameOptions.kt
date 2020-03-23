@@ -12,15 +12,15 @@ class GameOptions : AppCompatActivity() {
         setContentView(R.layout.activity_game_options)
         val gameBoard= Intent(this,TheGameBoard::class.java)
         easyBtn.setOnClickListener{
-            gameBoard.putExtra("gameMdode","easy")
+            gameBoard.putExtra("gameMode","easy")
             startActivity(gameBoard)
         }
         mediumBtn.setOnClickListener{
-            gameBoard.putExtra("gameMdode","medium")
+            gameBoard.putExtra("gameMode","medium")
             startActivity(gameBoard)
         }
         hardbtn.setOnClickListener{
-            gameBoard.putExtra("gameMdode","hard")
+            gameBoard.putExtra("gameMode","hard")
             startActivity(gameBoard)
         }
     }
