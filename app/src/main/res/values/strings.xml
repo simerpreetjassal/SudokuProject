@@ -2,11 +2,11 @@
     <string name="app_name">Singh Sudoku</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="loginOption"><u>Already Register. Login here</u></string>
-    <string name="register"><u>Don\'t have account. Register here</u></string>
+    <string name="loginOption"><u>Already registered? Login here.</u></string>
+    <string name="register"><u>Don\'t have account? Register here.</u></string>
     <string name="registerText">Register</string>
     <string name="login">Login</string>
-    <string name="myUser"> <u>signed in as simerpreet</u></string>
+    <string name="myUser"> <u>Signed in as simerpreet</u></string>
     <string name="gameName">Singh Sudoku</string>
     <string name="dialogText">High Score</string>
 </resources>

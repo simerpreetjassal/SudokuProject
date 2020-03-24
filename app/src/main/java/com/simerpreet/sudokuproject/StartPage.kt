@@ -24,6 +24,17 @@ class StartPage : AppCompatActivity() {
         newGameBtn.setOnClickListener{
             startActivity(myGameIntent)
         }
+        continueGameBtn.setOnClickListener{
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Continue")
+            builder.setMessage("This is under construction")
+            builder.setPositiveButton("Ok"){dialog, which ->
+            }
+            val alertDialog = builder.create()
+
+            // Set other dialog properties
+            alertDialog.show()
+        }
         highScoreBtn.setOnClickListener{
             val builder = AlertDialog.Builder(this)
             builder.setTitle(R.string.dialogText)
