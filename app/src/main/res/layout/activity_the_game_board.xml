@@ -11,14 +11,15 @@
     tools:context=".TheGameBoard">
 
     <TextView
-        android:id="@+id/PlayerName"
-        android:layout_width="406dp"
-        android:layout_height="32dp"
-        android:text="Player Name : Simer   Score: 100"
+        android:id="@+id/userName"
+        android:layout_width="235dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="4dp"
+        android:text="Player Name; Unknown"
+        android:textAlignment="textEnd"
         android:textColor="#FFEB3B"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -27,9 +28,9 @@
         layout="@layout/game_board"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PlayerName" />
+        app:layout_constraintTop_toBottomOf="@+id/userName" />
 
     <Button
         android:id="@+id/submitSln"
@@ -41,6 +42,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="115dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="4dp"
+        android:background="#FFEB3B"
+        android:text=""
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

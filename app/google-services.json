@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "782817646578",
+    "firebase_url": "https://singhsudokuproject.firebaseio.com",
+    "project_id": "singhsudokuproject",
+    "storage_bucket": "singhsudokuproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782817646578:android:03d7dad82c96be4fce7d6b",
+        "android_client_info": {
+          "package_name": "com.simerpreet.sudokuproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "782817646578-sg30e1293ja9j8uju35vtu8uoaa47lf9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.simerpreet.sudokuproject",
+            "certificate_hash": "542f45e630ffc662187216f89418c77ced9a65c0"
+          }
+        },
+        {
+          "client_id": "782817646578-k9p7dff2k1ursdo5vi59od1rvp9816ue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOZSZCbvxLTsSL64xW5_ZeVX_nEIdWKGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "782817646578-k9p7dff2k1ursdo5vi59od1rvp9816ue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

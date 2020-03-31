@@ -41,17 +41,25 @@
         app:layout_constraintTop_toBottomOf="@+id/mediumBtn" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/userName"
         android:layout_width="235dp"
         android:layout_height="36dp"
-        android:layout_marginStart="160dp"
         android:layout_marginTop="4dp"
-        android:text="@string/myUser"
+        android:text="Player Name Unknown"
         android:textAlignment="textEnd"
         android:textColor="#FFEB3B"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="#FFEB3B"
+        android:text=""
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

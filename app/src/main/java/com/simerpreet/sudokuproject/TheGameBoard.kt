@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.beust.klaxon.Klaxon
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_the_game_board.*
 
 
@@ -24,6 +26,22 @@ class TheGameBoard : AppCompatActivity(){
         submitSln.setOnClickListener{
             val myIntent= Intent(this,subm_solution_page::class.java)
             startActivity(myIntent)
+        }
+        var userName1 = intent.getStringExtra("USER_NAME")
+        if(userName1!=null){
+            userName.setText("Player Name: ${userName1}")
+
+        }
+
+        if(intent.getStringExtra("LGO")!=null) {
+            logout.setText("Logout")
+            logout.visibility = View.VISIBLE
+        }
+        logout.setOnClickListener{
+            FirebaseAuth.getInstance().signOut()
+            Toast.makeText(this,"Logout Successfully", Toast.LENGTH_SHORT)
+            logout.visibility = View.INVISIBLE
+
         }
     }
 

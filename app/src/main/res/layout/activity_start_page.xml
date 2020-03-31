@@ -9,8 +9,8 @@
 
     <Button
         android:id="@+id/continueGameBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_marginTop="200dp"
         android:background="#FFEB3B"
         android:text="Continue"
@@ -20,8 +20,8 @@
 
     <Button
         android:id="@+id/resetBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_marginTop="32dp"
         android:background="#FFEB3B"
         android:text="Restart"
@@ -31,8 +31,8 @@
 
     <Button
         android:id="@+id/newGameBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_marginTop="32dp"
         android:background="#FFEB3B"
         android:text="New Game"
@@ -42,8 +42,8 @@
 
     <Button
         android:id="@+id/highScoreBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_marginTop="32dp"
         android:background="#FFEB3B"
         android:text="High Score"
@@ -53,8 +53,8 @@
 
     <Button
         android:id="@+id/loginBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_marginTop="32dp"
         android:text="Login"
         android:backgroundTint="#FFEB3B"
@@ -73,6 +73,29 @@
         android:fontWeight="800"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/playerName"
+        android:layout_width="203dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="4dp"
+        android:text="Player Name: Unknown"
+        android:textAlignment="textEnd"
+        android:textColor="#FFEB3B"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="#FFEB3B"
+        android:text=""
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
