@@ -16,7 +16,7 @@ class GameOptions : AppCompatActivity() {
         val gameBoard= Intent(this,TheGameBoard::class.java)
         var userName1 = intent.getStringExtra("USER_NAME")
         if(userName1!=null){
-            userName.text=("Player Name: ${userName1}")
+            playerName.text=("Player Name: ${userName1}")
             gameBoard.putExtra("USER_NAME",userName1)
         }
 
@@ -39,8 +39,9 @@ class GameOptions : AppCompatActivity() {
         }
         logout.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
-            Toast.makeText(this,"Logout Successfully", Toast.LENGTH_SHORT)
+            Toast.makeText(this,"Logout Successfully", Toast.LENGTH_SHORT).show()
             logout.visibility = View.INVISIBLE
+            playerName.setText("Player Name : UnKnown")
 
         }
     }

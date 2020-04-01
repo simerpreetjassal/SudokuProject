@@ -65,6 +65,7 @@ class Login : AppCompatActivity() {
                             override fun onDataChange(p0: DataSnapshot) {
                                 userName = p0.child("Users/${userId}/username").value.toString()
                                 gameOptionIntent.putExtra("USER_NAME", userName);
+                                gameOptionIntent.putExtra("LGO","Logout")
                                 startActivity(gameOptionIntent)
                             }
 

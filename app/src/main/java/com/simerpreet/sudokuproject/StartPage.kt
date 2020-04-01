@@ -61,8 +61,9 @@ class StartPage : AppCompatActivity() {
         }
         logout.setOnClickListener{
              FirebaseAuth.getInstance().signOut()
-            Toast.makeText(this,"Logout Successfully",Toast.LENGTH_SHORT)
+            Toast.makeText(this,"Logout Successfully",Toast.LENGTH_SHORT).show()
             logout.visibility = View.INVISIBLE
+            playerName.setText("Player Name : UnKnown")
 
         }
 

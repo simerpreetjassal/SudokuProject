@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".subm_solution_page"></activity>
+        <activity android:name=".SolutionBySystem"></activity>
+        <activity android:name=".subm_solution_page" />
         <activity android:name=".StartPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +24,7 @@
         <activity android:name=".TheGameBoard" />
         <activity android:name=".GameOptions" />
         <activity android:name=".Login" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
