@@ -1,17 +1,14 @@
 package com.simerpreet.sudokuproject
 
-
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.beust.klaxon.Klaxon
-import com.github.kittinunf.fuel.httpGet
-import com.github.kittinunf.result.Result
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -32,8 +29,9 @@ class TheGameBoard : AppCompatActivity(){
         gameLevel = "${mode}${number}"
         getBoard(gameLevel!!,"SudokuPuzzles")
         submitSln.setOnClickListener{
-            val myIntent= Intent(this,subm_solution_page::class.java)
-            startActivity(myIntent)
+            checkTheBoard()
+            ////val myIntent= Intent(this,subm_solution_page::class.java)
+            //startActivity(myIntent)
         }
         var userName1 = intent.getStringExtra("USER_NAME")
         if(userName1!=null){
@@ -125,6 +123,129 @@ class TheGameBoard : AppCompatActivity(){
                 j = 0;
             }
         }
+    }
+
+    fun checkTheBoard(){
+
+        if(checkAllRow()){
+            if(checkAllColumn()){
+                if(checkTheSqures()){
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("Victory")
+                    builder.setMessage("You won. High Score updated")
+                    builder.setPositiveButton("Ok"){dialog, which ->
+                    }
+                    val alertDialog = builder.create()
+                    alertDialog.show()
+
+                }
+            }
+        }
+
+
+    }
+    fun checkAllRow(): Boolean{
+        var resultRowChecker = true
+        var myButton: Button? = null
+        var enteries = mutableSetOf("0")
+        outer@ for(i in 0..8){
+            inner@for(j in 0..8){
+                val resID = resources.getIdentifier("r${i}c${j}", "id", packageName)
+                myButton  = findViewById<Button>(resID)
+                var text = myButton.text.toString()
+                if(!text.isEmpty()){
+                    var result = enteries.add(text)
+                    if(result == false){
+                        myButton.background = ContextCompat.getDrawable(applicationContext,R.drawable.error)
+                        errorBox(i+1,j+1)
+                        resultRowChecker = false
+                        break@outer
+                    }
+
+                }else{
+                    myButton.background = ContextCompat.getDrawable(applicationContext,R.drawable.error)
+                    errorBox(i+1,j+1)
+                    resultRowChecker = false
+                    break@outer
+                }
+            }
+            enteries = mutableSetOf("0")
+        }
+        return resultRowChecker
+
+    }
+    fun checkAllColumn(): Boolean{
+        var resultColChecker = true
+        var myButton: Button? = null
+        var enteries = mutableSetOf("0")
+        outer@ for(i in 0..8){
+            inner@for(j in 0..8){
+                val resID = resources.getIdentifier("r${j}c${i}", "id", packageName)
+                myButton  = findViewById<Button>(resID)
+                var text = myButton.text.toString()
+                if(!text.isEmpty()){
+                    var result = enteries.add(text)
+                    if(result == false){
+                        myButton.background = ContextCompat.getDrawable(applicationContext,R.drawable.error)
+                        errorBox(j+1,i+1)
+                        resultColChecker = false
+                        break@outer
+                    }
+
+                }else{
+                    myButton.background = ContextCompat.getDrawable(applicationContext,R.drawable.error)
+                    errorBox(i+1,j+1)
+                    resultColChecker = false
+                    break@outer
+                }
+            }
+            enteries = mutableSetOf("0")
+        }
+        return resultColChecker
+
+    }
+
+    fun checkTheSqures():Boolean{
+        var resultSqureChecker = true
+        var myButton: Button? = null
+        outer@ for( myRow in  0 until 9 step 3) {
+            for (myCol in 0 until 9 step 3) {
+                var enteries = mutableSetOf("0")
+                for (row in myRow until (myRow + 3)) {
+                    for (col in myCol until (myCol+3)) {
+                        val resID = resources.getIdentifier("r${row}c${col}", "id", packageName)
+                        myButton  = findViewById<Button>(resID)
+                        var text = myButton.text.toString()
+                        if(!text.isEmpty()){
+                            var result = enteries.add(text)
+                            if(result == false){
+                                myButton.background = ContextCompat.getDrawable(applicationContext,R.drawable.error)
+                                errorBox(row+1,col+1)
+                                resultSqureChecker = false
+                                break@outer
+                            }
+
+                        }else{
+                            myButton.background = ContextCompat.getDrawable(applicationContext,R.drawable.error)
+                            errorBox(row+1,col+1)
+                            resultSqureChecker = false
+                            break@outer
+                        }
+                    }
+                }
+            }
+        }
+        return resultSqureChecker
+    }
+
+    fun errorBox(row: Int, col:Int){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.dialogText)
+        builder.setMessage("ROW $row COLUMN $col is wrong")
+        builder.setPositiveButton("Ok"){dialog, which ->
+        }
+        val alertDialog = builder.create()
+        alertDialog.show()
     }
 
 
