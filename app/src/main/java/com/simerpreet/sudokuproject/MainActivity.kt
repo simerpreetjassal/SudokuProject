@@ -61,8 +61,11 @@ class MainActivity : AppCompatActivity() {
                     myRef.setValue(myEmail.text.toString())
                     myRef = database.getReference("Users/$userId/username")
                     myRef.setValue(username.text.toString())
+                    myRef = database.getReference("Users/$userId/highScore")
+                    myRef.setValue(0);
                     val gameOptionIntent= Intent(this,GameOptions::class.java)
-                    gameOptionIntent.putExtra("USER_NAME", username.text.toString());
+                    gameOptionIntent.putExtra("USER_NAME", username.text.toString())
+                    gameOptionIntent.putExtra("LGO","Logout")
                     startActivity(gameOptionIntent)
 
                 } else {

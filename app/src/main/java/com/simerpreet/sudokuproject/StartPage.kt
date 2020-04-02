@@ -20,7 +20,8 @@ import kotlinx.android.synthetic.main.activity_start_page.*
 class StartPage : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-
+    private  var highScore = 0;
+    private var myUid = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_page)
@@ -38,20 +39,28 @@ class StartPage : AppCompatActivity() {
             startActivity(myGameIntent)
         }
         continueGameBtn.setOnClickListener{
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Continue")
-            builder.setMessage("This is under construction")
-            builder.setPositiveButton("Ok"){dialog, which ->
-            }
-            val alertDialog = builder.create()
+            val resumeGame = Intent(this,TheGameBoard::class.java)
+            if(auth.currentUser!=null) {
+                resumeGame.putExtra("pullLastOne", true)
+                resumeGame.putExtra("UID", myUid)
+                startActivity(resumeGame)
+            }else{
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("SignUp/SignIN")
+                builder.setMessage("Please signUp/In to use this feature")
+                builder.setPositiveButton("Ok"){dialog, which ->
+                }
+                val alertDialog = builder.create()
 
-            // Set other dialog properties
-            alertDialog.show()
+                // Set other dialog properties
+                alertDialog.show()
+            }
+
         }
         highScoreBtn.setOnClickListener{
             val builder = AlertDialog.Builder(this)
             builder.setTitle(R.string.dialogText)
-            builder.setMessage("Your High Score is 100")
+            builder.setMessage("Your High Score is ${highScore}")
             builder.setPositiveButton("Ok"){dialog, which ->
             }
             val alertDialog = builder.create()
@@ -73,9 +82,9 @@ class StartPage : AppCompatActivity() {
 
     fun checkUserAlreadySignedIn(myGameIntent: Intent){
         val currentUser: FirebaseUser? = auth.getCurrentUser()
-        Log.d("USERDON",currentUser.toString())
         if(currentUser!=null){
            var userId = currentUser.uid
+            myUid = userId
             val database = FirebaseDatabase.getInstance()
             var userName = "Unknown"
             database!!.getReference()
@@ -86,13 +95,13 @@ class StartPage : AppCompatActivity() {
 
                     override fun onDataChange(p0: DataSnapshot) {
                         userName = p0.child("Users/${userId}/username").value.toString()
+                        highScore = p0.child("Users/${userId}/highScore").value.toString().toInt()
                         playerName.setText("Player Name: $userName")
                         logout.setText("Logout")
                         logout.visibility = View.VISIBLE
                         myGameIntent.putExtra("USER_NAME",userName)
                         myGameIntent.putExtra("LGO","Logout")
                     }
-
                 })
         }
 

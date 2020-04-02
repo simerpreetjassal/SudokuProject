@@ -1,5 +1,6 @@
 package com.simerpreet.sudokuproject
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,10 +11,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.beust.klaxon.Klaxon
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_the_game_board.*
 
 
@@ -27,11 +30,20 @@ class TheGameBoard : AppCompatActivity(){
         val mode = intent.getStringExtra("gameMode")
         var number = (0..2).random()
         gameLevel = "${mode}${number}"
-        getBoard(gameLevel!!,"SudokuPuzzles")
+        val myIntent = Intent(this, subm_solution_page::class.java)
+        var bool = intent.getBooleanExtra("pullLastOne",false)
+        getBoard(gameLevel!!,"SudokuPuzzles",bool)
         submitSln.setOnClickListener{
-            checkTheBoard()
-            ////val myIntent= Intent(this,subm_solution_page::class.java)
-            //startActivity(myIntent)
+            if(checkTheBoard()) {
+                myIntent.putExtra("status","true")
+                myIntent.putExtra("lastPlay",saveBeforeClose())
+                startActivity(myIntent)
+            }
+        }
+        exit.setOnClickListener{
+            myIntent.putExtra("status","false")
+            myIntent.putExtra("lastPlay",saveBeforeClose())
+            startActivity(myIntent)
         }
         var userName1 = intent.getStringExtra("USER_NAME")
         if(userName1!=null){
@@ -87,18 +99,22 @@ class TheGameBoard : AppCompatActivity(){
 
 
     }
-    fun getBoard(gMode: String,path:String) {
-
-
+    fun getBoard(gMode: String,path:String,lastPlay:Boolean=false) {
         val database = FirebaseDatabase.getInstance()
         database!!.getReference()
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     Log.e("MainAct", "${p0.toException()}")
                 }
-
+                var puzzles : Any? = null
                 override fun onDataChange(p0: DataSnapshot) {
-                    var puzzles = p0.child("${path}/${gMode}").value
+                    if(!lastPlay)
+                    {
+                        puzzles = p0.child("${path}/${gMode}").value
+                    }else{
+                        val myUid = intent.getStringExtra("UID").toString()
+                        puzzles = p0.child("Users/${myUid}/lastPlay").value
+                    }
                     val Borad2Array = Klaxon().parseArray<ArrayList<Int>>(puzzles.toString())
                     fillTheBoard(Borad2Array)
                 }
@@ -125,24 +141,24 @@ class TheGameBoard : AppCompatActivity(){
         }
     }
 
-    fun checkTheBoard(){
-
+    fun checkTheBoard(): Boolean{
+        var bool = false
         if(checkAllRow()){
             if(checkAllColumn()){
                 if(checkTheSqures()){
                     val builder = AlertDialog.Builder(this)
                     builder.setTitle("Victory")
-                    builder.setMessage("You won. High Score updated")
+                    builder.setMessage("You won. Score 100")
                     builder.setPositiveButton("Ok"){dialog, which ->
                     }
                     val alertDialog = builder.create()
                     alertDialog.show()
+                    bool = true
 
                 }
             }
         }
-
-
+        return bool
     }
     fun checkAllRow(): Boolean{
         var resultRowChecker = true
@@ -246,6 +262,24 @@ class TheGameBoard : AppCompatActivity(){
         }
         val alertDialog = builder.create()
         alertDialog.show()
+    }
+    fun saveBeforeClose():String{
+        var bigArray = arrayOf<Array<Int>>()
+        for(i in 0..8){
+            var lilarray = arrayOf<Int>()
+            for(j in 0..8){
+                val resID = resources.getIdentifier("r${i}c${j}", "id", packageName)
+                val b = findViewById<Button>(resID)
+                if(b.text.isEmpty()){
+                    lilarray+=0
+                }else {
+                    lilarray += b.text.toString().toInt()
+                }
+            }
+            bigArray+=lilarray
+        }
+        var gson = Gson()
+        return gson.toJson(bigArray)
     }
 
 
