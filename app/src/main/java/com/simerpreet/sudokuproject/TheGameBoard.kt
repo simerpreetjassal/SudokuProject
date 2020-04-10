@@ -24,9 +24,12 @@ class TheGameBoard : AppCompatActivity(){
 
     private var slelectedCell: Button? = null
     var gameLevel : String? = null
+    var solutionBtnPressed = false
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_the_game_board)
+        auth = FirebaseAuth.getInstance()
         val mode = intent.getStringExtra("gameMode")
         var number = (0..2).random()
         gameLevel = "${mode}${number}"
@@ -37,23 +40,31 @@ class TheGameBoard : AppCompatActivity(){
             if(checkTheBoard()) {
                 myIntent.putExtra("status","true")
                 myIntent.putExtra("lastPlay",saveBeforeClose())
+                myIntent.putExtra("solutionBtnPressed",solutionBtnPressed)
+                myIntent.putExtra("ActualSolvedGame",true)
                 startActivity(myIntent)
             }
         }
         exit.setOnClickListener{
             myIntent.putExtra("status","false")
             myIntent.putExtra("lastPlay",saveBeforeClose())
+            myIntent.putExtra("solutionBtnPressed",solutionBtnPressed)
             startActivity(myIntent)
         }
         var userName1 = intent.getStringExtra("USER_NAME")
-        if(userName1!=null){
-            playerName.setText("Player Name: ${userName1}")
+        val signedIn = checkSigIn()
+        if(signedIn) {
+            if (userName1 != null) {
+                playerName.setText("Player Name: ${userName1}")
 
+            }
         }
 
-        if(intent.getStringExtra("LGO")!=null) {
-            logout.setText("Logout")
-            logout.visibility = View.VISIBLE
+        if(signedIn) {
+            if (intent.getStringExtra("LGO") != null) {
+                logout.setText("Logout")
+                logout.visibility = View.VISIBLE
+            }
         }
         logout.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
@@ -64,6 +75,9 @@ class TheGameBoard : AppCompatActivity(){
         }
         getTheSolution.setOnClickListener{
             getBoard(gameLevel!!,"SudokuSolution")
+            solutionBtnPressed = true
+
+
         }
     }
 
@@ -115,8 +129,19 @@ class TheGameBoard : AppCompatActivity(){
                         val myUid = intent.getStringExtra("UID").toString()
                         puzzles = p0.child("Users/${myUid}/lastPlay").value
                     }
-                    val Borad2Array = Klaxon().parseArray<ArrayList<Int>>(puzzles.toString())
-                    fillTheBoard(Borad2Array)
+                    if(puzzles!=null)
+                    {
+                        val Borad2Array = Klaxon().parseArray<ArrayList<Int>>(puzzles.toString())
+                        fillTheBoard(Borad2Array)
+                    }else{
+                        val builder = AlertDialog.Builder(this@TheGameBoard)
+                        builder.setTitle("Alert")
+                        builder.setMessage("You don't have any saved game")
+                        builder.setPositiveButton("Ok"){dialog, which ->
+                        }
+                        val alertDialog = builder.create()
+                        alertDialog.show()
+                    }
                 }
 
             })
@@ -146,15 +171,7 @@ class TheGameBoard : AppCompatActivity(){
         if(checkAllRow()){
             if(checkAllColumn()){
                 if(checkTheSqures()){
-                    val builder = AlertDialog.Builder(this)
-                    builder.setTitle("Victory")
-                    builder.setMessage("You won. Score 100")
-                    builder.setPositiveButton("Ok"){dialog, which ->
-                    }
-                    val alertDialog = builder.create()
-                    alertDialog.show()
                     bool = true
-
                 }
             }
         }
@@ -281,6 +298,9 @@ class TheGameBoard : AppCompatActivity(){
         var gson = Gson()
         return gson.toJson(bigArray)
     }
-
+    fun checkSigIn():Boolean{
+        val currentUser: FirebaseUser? = auth.getCurrentUser()
+        return currentUser!=null
+    }
 
 }

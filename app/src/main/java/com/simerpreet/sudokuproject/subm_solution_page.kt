@@ -3,6 +3,7 @@ package com.simerpreet.sudokuproject
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -17,6 +18,16 @@ class subm_solution_page : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subm_solution_page)
         auth = FirebaseAuth.getInstance()
+        val builder = AlertDialog.Builder(this)
+        if(!intent.getBooleanExtra("solutionBtnPressed",false)) {
+            if(intent.getBooleanExtra("ActualSolvedGame",false)) {
+                    builder.setTitle("Victory")
+                    builder.setMessage("You won. Score 100")
+                    builder.setPositiveButton("Ok") { dialog, which -> }
+                    val alertDialog = builder.create()
+                    alertDialog.show()
+                }
+        }
         displayMessage()
 
 
@@ -37,7 +48,11 @@ class subm_solution_page : AppCompatActivity() {
                         var highScore = p0.child("Users/${userId}/highScore").value.toString()
                         Log.d("DON2",highScore);
                         var myScore = highScore.toInt()
-                        myScore+=100
+                        if(!intent.getBooleanExtra("solutionBtnPressed",false)) {
+                            if(intent.getBooleanExtra("ActualSolvedGame",false)) {
+                                myScore += 100
+                            }
+                        }
                         database.getReference("Users/$userId/highScore").setValue(myScore)
                         Log.d("STTAS",status)
                         if(status.equals("true")) {
@@ -54,7 +69,7 @@ class subm_solution_page : AppCompatActivity() {
 
         }
         else{
-            afterSubmitText.text = "Please Sign Up to Save The Game. The High Score "
+            afterSubmitText.text = "Please Sign In to Save the Game and the High Score "
         }
     }
 }

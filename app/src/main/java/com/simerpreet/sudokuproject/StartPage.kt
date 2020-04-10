@@ -32,9 +32,6 @@ class StartPage : AppCompatActivity() {
         loginBtn.setOnClickListener{
             startActivity(myIntent)
         }
-        resetBtn.setOnClickListener{
-            startActivity(myGameIntent)
-        }
         newGameBtn.setOnClickListener{
             startActivity(myGameIntent)
         }
@@ -46,7 +43,7 @@ class StartPage : AppCompatActivity() {
                 startActivity(resumeGame)
             }else{
                 val builder = AlertDialog.Builder(this)
-                builder.setTitle("SignUp/SignIN")
+                builder.setTitle("SignUp/SignIn")
                 builder.setMessage("Please signUp/In to use this feature")
                 builder.setPositiveButton("Ok"){dialog, which ->
                 }
